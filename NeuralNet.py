@@ -45,7 +45,7 @@ class NeuralNet:
         self.all_nodes.append(outputs)
         self.all_nodes = np.array(self.all_nodes)
 
-    def train_many(self, inputs, outputs, epochs):
+    def train_many(self, inputs, outputs, epochs=1):
         if len(inputs) != len(outputs):
             raise Exception("Inputs and Outputs should be same size")
         for i in range(len(inputs)):
@@ -54,7 +54,7 @@ class NeuralNet:
             new_outputs.append(outputs[i])
             self.train(np.array(new_inputs).ravel(), np.array(new_outputs).ravel(), epochs)
 
-    def train(self, inputs, outputs, epochs):
+    def train(self, inputs, outputs, epochs=1):
         check_outputs(outputs, self.outputs_count)
         check_epochs(epochs)
         predicted_outputs = np.array(self.test(inputs))
