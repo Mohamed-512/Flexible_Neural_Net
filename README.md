@@ -2,7 +2,7 @@
 A simple and flexible python library that allows you to build custom Neural Networks where you can easily tweak parameters to change how your network behaves
 
 ## Installation
-```pip install Flexible-Neural-Network```
+```pip install flexible-neural-network```
 
 ## Initialization
 * First initialize a Neural Net object and pass number of inputs, outputs, and hidden layers
