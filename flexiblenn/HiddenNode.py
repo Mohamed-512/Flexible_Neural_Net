@@ -1,6 +1,6 @@
 import numpy as np
 import random as rand
-import ActivationFunctions
+from flexiblenn import ActivationFunctions
 
 activation_functions_map = ActivationFunctions.activation_functions_map
 activation_functions_map_d = ActivationFunctions.activation_functions_map_d

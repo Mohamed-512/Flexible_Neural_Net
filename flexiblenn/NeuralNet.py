@@ -1,19 +1,26 @@
-import HiddenNode
-import InputNode
-import OutputNode
-
+from flexiblenn import InputNode, HiddenNode, OutputNode
+import os
 import numpy as np
+import pickle
 
 
 class NeuralNet:
     all_nodes = []
 
-    def __init__(self, inputs_count, outputs_count, hidden_layers_count, nodes_in_each_layer=3, activation_func="tanh", learning_rate=0.1):
+    def __init__(self, inputs_count, outputs_count, hidden_layers_count, nodes_in_each_layer=3, activation_func="tanh",
+                 learning_rate=0.1):
         check_init_params(inputs_count, outputs_count, hidden_layers_count, nodes_in_each_layer, learning_rate)
         self.inputs_count = inputs_count
         self.outputs_count = outputs_count
         self.hidden_layers_count = hidden_layers_count
         self.learning_rate = learning_rate
+
+        if activation_func is None:
+            activation_func = HiddenNode.activation_functions_map.get("tanh")
+
+        check_activation_func(activation_func)
+
+        self.activation_function = activation_func
 
         if type(nodes_in_each_layer) is int:
             self.nodes_in_each_layer = [nodes_in_each_layer] * hidden_layers_count
@@ -128,6 +135,24 @@ class NeuralNet:
             else:
                 print("Hidden layer", i, "has", len(self.all_nodes[i]), "Nodes")
 
+    def save(self, file_name="my_fnn_model"):
+        with open(file_name + '.pkl', 'wb') as output:
+            pickle.dump(self, output, pickle.HIGHEST_PROTOCOL)
+
+    @classmethod
+    def load(cls, path):
+        check_path(path)
+        with open(path, 'rb') as i:
+            nn = pickle.load(i)
+            return nn
+
+def check_path(path):
+    if type(path) != str:
+        raise ValueError("Invalid type", type(path), "for path")
+    elif not os.path.isfile(path):
+        raise Exception("Invalid file path")
+    elif not str(path).endswith(".pkl"):
+        raise Exception("Model file type should be json")
 
 def check_inputs(inputs, inputs_count):
     if not (type(inputs) is list or type(inputs) is np.ndarray):
@@ -136,18 +161,19 @@ def check_inputs(inputs, inputs_count):
         raise Exception("Neural Net inputs should be same size as defined in 'inputs_count'")
     elif type(inputs) is list or type(inputs) is np.ndarray:
         for i in inputs:
-            if type(i) != np.float64 and type(i) !=  np.int32 and type(i) != int and type(i) != float:
+            if type(i) != np.float64 and type(i) != np.int32 and type(i) != int and type(i) != float:
                 print("type", type(i))
                 raise Exception("inputs can be ints or floats only")
 
 def check_outputs(outputs, outputs_count):
     if not (type(outputs) is list or type(outputs) is np.ndarray):
         raise Exception("Neural Net outputs should be a list of numbers")
-    elif (type(outputs) is not np.ndarray and len(outputs) != outputs_count) or (type(outputs) is np.ndarray and outputs.size != outputs_count):
+    elif (type(outputs) is not np.ndarray and len(outputs) != outputs_count) or (
+            type(outputs) is np.ndarray and outputs.size != outputs_count):
         raise Exception("Neural Net outputs should be same size as defined in 'outputs_count'")
     elif type(outputs) is list or type(outputs) is np.ndarray:
         for i in outputs:
-            if type(i) != np.float64 and type(i) !=  np.int32 and type(i) != int and type(i) != float:
+            if type(i) != np.float64 and type(i) != np.int32 and type(i) != int and type(i) != float:
                 print("type", type(i))
                 raise Exception("outputs can be ints or floats only")
 
@@ -156,6 +182,11 @@ def check_epochs(epochs):
         raise Exception("epochs should be an int")
     elif epochs < 1:
         raise Exception("epochs should be greater than or equal 1")
+
+def check_activation_func(activation_function):
+    activation_function = str(activation_function).lower()
+    if not HiddenNode.activation_functions_map.__contains__(activation_function):
+        raise Exception("Enter a valid activation function from:\n", HiddenNode.activation_functions_map.keys())
 
 def check_init_params(inputs_count, outputs_count, hidden_layers_count, nodes_in_each_layer, learning_rate):
     if inputs_count <= 0:
