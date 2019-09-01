@@ -7,7 +7,7 @@ class OutputNode:
 
     def __init__(self, learning_rate):
         self.inputs = np.array([])
-        self.weights = np.array([])
+        self.weights = np.array([], dtype=np.float128)
         self.bias = 1
         self.learning_rate = learning_rate
         self.output = 0

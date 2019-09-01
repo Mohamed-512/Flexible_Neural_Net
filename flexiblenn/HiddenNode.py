@@ -12,7 +12,7 @@ class HiddenNode:
     def __init__(self, learning_rate, activation_function="tanh"):
         self.learning_rate = learning_rate
         self.inputs = np.array([])
-        self.weights = np.array([])
+        self.weights = np.array([], dtype=np.float128)
         self.bias = 1
         self.output = None
         if activation_function is None:
