@@ -2,22 +2,27 @@ import numpy as np
 
 
 def tanh(i):
-    return (np.exp(i) - np.exp(-1*i))/(np.exp(i) + np.exp(-1*i))
+    return 2 / (1 + np.exp(-2 * i)) - 1
+
 
 def tanh_d(i):
-    return 1 - tanh(i)**2
+    return 1 - tanh(i) ** 2
+
 
 def sigmoid(i):
     return 1 / (1 + np.exp(-i))
 
+
 def sigmoid_d(i):
     return sigmoid(i) * (1 - sigmoid(i))
+
 
 def relu(i):
     if i <= 0:
         return 0
     else:
         return i
+
 
 def relu_d(i):
     if i <= 0:
