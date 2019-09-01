@@ -58,4 +58,10 @@ _Here we specified the number of epochs to be 1_
   ```output = myNN.test(mystery_flower)```
   where output is always an np.ndarray with size as the specfied in the object's constructor. _for the current example it's = [1.45327823]_
   
-  Obviously NNs **do not** give exact answers and its our job to determine which class is it and judging from the training data we only have class 0, or 1 and the output we got is nearer to 1 than 0 so you should **classify it as  1**
+* *Save NN for later*
+  ```myNN.save("file_name")```
+
+* *Load NN without the need for retraining*
+  ```myNN = NeuralNet.load("file_name")```
+
+Obviously NNs **do not** give exact answers and its our job to determine which class is it belongs to and judging from the training data we only have class 0, or 1 and the output we got is nearer to 1 than 0 so we should **classify it as  1**
