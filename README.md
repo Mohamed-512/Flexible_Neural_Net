@@ -3,7 +3,8 @@
 A simple and flexible python library that allows you to build custom Neural Networks where you can easily tweak parameters to change how your network behaves
 
 ## Installation 
-🎉 _11000+ installs_ 🎉
+🎉 [![Downloads](https://pepy.tech/badge/flexible-neural-network)](https://pepy.tech/project/flexible-neural-network) 🎉
+
 
 ```pip install flexible-neural-network```
 
